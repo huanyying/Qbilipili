@@ -1,5 +1,7 @@
 # QbiliPlili
 
+[![Build APK](https://github.com/huanyying/Qbilipili/actions/workflows/build.yml/badge.svg)](https://github.com/huanyying/Qbilipili/actions/workflows/build.yml)
+
 一个 LSPosed / Xposed 模块：**劫持 QQ 内哔哩哔哩小程序卡片，一键跳转到 PiliPlus（第三方 B 站客户端）打开视频**，并自动跳过 QQ 的"即将离开 QQ"确认弹窗。
 
 > ⚠️ 本项目仅供学习交流使用，请勿用于任何商业用途。Hook 第三方应用的行为可能违反其用户协议，风险自负。
@@ -49,6 +51,10 @@ bash build.sh
 | `r8.jar` | 打 dex | [R8 GitHub Releases](https://github.com/r8-releases/r8/releases) 下载 `.jar` |
 
 默认工具路径假设为 `/opt/tools/`（含 `android.jar`、`r8.jar`、`aapt`），与构建机无关，可按需修改 `build.sh` 顶部变量。
+
+### GitHub Actions 自动构建
+
+仓库已配置 [GitHub Actions](.github/workflows/build.yml)：每次 push / PR 到 `main` 分支（或手动 `workflow_dispatch` 触发）都会自动执行完整构建，并把 `out/signed.apk` 作为构建产物（Artifact）供下载。CI 中通过环境变量 `JDK` / `TOOLS` 注入 JDK 与 android.jar/r8.jar 路径，无需修改 `build.sh`。
 
 
 ## 工作原理

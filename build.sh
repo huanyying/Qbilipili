@@ -2,8 +2,8 @@
 # Build QbiliPlili LSPosed module (pure-java, no aapt2/gradle needed)
 set -u
 cd "$(dirname "$0")"
-JDK=/opt/tools/jdk
-TOOLS=/opt/tools
+JDK="${JDK:-/opt/tools/jdk}"
+TOOLS="${TOOLS:-/opt/tools}"
 PKG=io.op.qbiliplili
 OUT=out
 
@@ -82,5 +82,7 @@ rm -f "$OUT"/signed.apk
 echo ""
 echo "== DONE =="
 ls -la "$OUT"/signed.apk
-cp "$OUT"/signed.apk /sdcard/QbiliPlili.apk
-echo "APK copied to /sdcard/QbiliPlili.apk"
+if [ -d /sdcard ]; then
+  cp "$OUT"/signed.apk /sdcard/QbiliPlili.apk
+  echo "APK copied to /sdcard/QbiliPlili.apk"
+fi

@@ -1,0 +1,52 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install build-tools & platform (aapt + android.jar)
+        run: |
+          yes | sdkmanager --licenses >/dev/null 2>&1 || true
+          sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" >/dev/null 2>&1
+
+      - name: Prepare tools dir (android.jar + r8.jar)
+        run: |
+          mkdir -p "$HOME/ci-tools"
+          cp "$ANDROID_HOME/platforms/android-34/android.jar" "$HOME/ci-tools/android.jar"
+          curl -fsSL -o "$HOME/ci-tools/r8.jar" \
+            "https://maven.google.com/com/android/tools/r8/8.3.37/r8-8.3.37.jar"
+
+      - name: Add aapt to PATH
+        run: |
+          BT="$ANDROID_HOME/build-tools/34.0.0"
+          echo "$BT" >> "$GITHUB_PATH"
+
+      - name: Build APK
+        run: |
+          export JDK="$JAVA_HOME"
+          export TOOLS="$HOME/ci-tools"
+          bash build.sh
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: QbiliPlili-apk
+          path: out/signed.apk
