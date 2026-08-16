@@ -46,7 +46,7 @@ bash build.sh
 | 依赖 | 用途 | 获取方式 |
 |---|---|---|
 | JDK 17+ | javac / jarsigner / keytool | 任意发行版，如 [Temurin](https://adoptium.net/) |
-| `android.jar`（platform 28） | 编译 Android API | Android SDK 的 `platforms/android-28/android.jar` |
+| `android.jar`（platform 34） | 编译 Android API | Android SDK 的 `platforms/android-34/android.jar` |
 | `aapt` | 编译资源/生成 arsc | Android SDK `build-tools/`，或 Debian 包 `aapt` |
 | `r8.jar` | 打 dex | [R8 GitHub Releases](https://github.com/r8-releases/r8/releases) 下载 `.jar` |
 
