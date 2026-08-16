@@ -39,6 +39,13 @@ jobs:
           BT="$ANDROID_HOME/build-tools/34.0.0"
           echo "$BT" >> "$GITHUB_PATH"
 
+      - name: Restore signing keystore from secret
+        run: |
+          if [ -n "${{ secrets.KEYSTORE_B64 }}" ]; then
+            echo "${{ secrets.KEYSTORE_B64 }}" | base64 -d > debug.keystore
+            chmod 600 debug.keystore
+          fi
+
       - name: Build APK
         run: |
           export JDK="$JAVA_HOME"
