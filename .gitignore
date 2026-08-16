@@ -1,0 +1,25 @@
+# build outputs
+out/
+gen/ab/
+gen/out_base.apk
+*.apk
+!signed.apk
+
+# compiled bytecode
+*.class
+
+# signing keystore - NEVER commit real keys
+debug.keystore
+*.jks
+*.keystore
+
+# large/local icon sources (regenerate from CropIcon.java if needed)
+gen/play_icon.png
+gen/src_icon.jpg
+
+# IDE / OS
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
